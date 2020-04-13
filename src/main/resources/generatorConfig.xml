@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="FightDB" targetRuntime="MyBatis3Simple">
+        <jdbcConnection driverClass="org.postgresql.Driver"
+                        connectionURL="jdbc:postgresql://localhost:5432/fightdb"
+                        userId="brawl_app"
+                        password="kick-some-ass">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="lt.vu.mybatis.model" targetProject="MAVEN"/>
+
+        <sqlMapGenerator targetPackage="lt.vu.mybatis.xml" targetProject="MAVEN"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="lt.vu.mybatis.dao" targetProject="MAVEN"/>
+
+
+        <table schema="public" tableName="Taverns">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+        </table>
+        <table schema="public" tableName="Fighters">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+            <!--            <ignoreColumn column="opt_lock_version" />-->
+        </table>
+        <table schema="public" tableName="Weapons">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+        </table>
+        <table schema="public" tableName="TavernFighter"/>
+    </context>
+</generatorConfiguration>

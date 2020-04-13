@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: me
+  Date: 4/13/20
+  Time: 5:57 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>#{weaponDetails.weapon.name}</title>
+</h:head>
+
+<h:body>
+    <h1>#{weaponDetails.weapon.name}</h1>
+
+    <h:button value="Edit" outcome="weaponUpdate.xhtml">
+        <f:param name="id" value="#{weaponDetails.weapon.id}"/>
+    </h:button>
+    <h:form>
+        <h:commandButton value="Delete" action="#{weaponDetails.delete}"/>
+    </h:form>
+
+    <p>Power: #{weaponDetails.weapon.power}</p>
+
+    <h:panelGroup rendered="#{weaponDetails.weapon.owner ne null}">
+        <p>Owner: <h:link value="#{weaponDetails.weapon.owner.name}" outcome="fighterDetails.xhtml">
+            <f:param name="id" value="#{weaponDetails.weapon.owner.id}"/>
+        </h:link></p>
+    </h:panelGroup>
+</h:body>
+
+</html>

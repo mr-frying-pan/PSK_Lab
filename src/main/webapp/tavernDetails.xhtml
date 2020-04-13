@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: me
+  Date: 4/13/20
+  Time: 5:14 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>#{tavernDetails.tavern.name}</title>
+</h:head>
+
+<h:body>
+    <h1>#{tavernDetails.tavern.name}</h1>
+    <h:button value="Edit" outcome="tavernUpdate.xhtml">
+        <f:param name="id" value="#{tavernDetails.tavern.id}"/>
+    </h:button>
+    <h:form>
+        <h:commandButton value="Delete" action="#{tavernDetails.delete}"/>
+    </h:form>
+    <p>Fighters:</p>
+    <ui:repeat value="#{tavernDetails.tavern.fighters}" var="tavernFighter">
+        <h:link value="#{tavernFighter.name}" outcome="fighterDetails.xhtml">
+            <f:param name="id" value="#{tavernFighter.id}"/>
+        </h:link>
+        <br/>
+    </ui:repeat>
+    <h:outputText rendered="#{tavernDetails.tavern.fighters.size() eq 0}" value="None."/>
+
+    <h:form rendered="#{tavernDetails.otherFighters.size() gt 0}">
+        <h:selectOneMenu value="#{tavernDetails.chosenFighterId}">
+            <f:selectItems value="#{tavernDetails.otherFighters}" var="otherFighter" itemValue="#{otherFighter.id}"
+                           itemLabel="#{otherFighter.name}"/>
+        </h:selectOneMenu>
+        <h:commandButton value="Add selected" action="#{tavernDetails.addFighter}"/>
+    </h:form>
+</h:body>
+
+</html>

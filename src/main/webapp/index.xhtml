@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <title>Brawl</title>
+</h:head>
+<h:body>
+    <h1>Fighters</h1>
+    <ol>
+        <ui:repeat value="#{fighters.allFighters}" var="fighter">
+            <li><h:link value="#{fighter.name}" outcome="fighterDetails.xhtml">
+                <f:param name="id" value="#{fighter.id}"/>
+            </h:link></li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:commandButton value="Create new" action="fighterCreation.xhtml"/>
+    </h:form>
+
+    <h1>Taverns</h1>
+    <ol>
+        <ui:repeat value="#{taverns.allTaverns}" var="tavern">
+            <li><h:link value="#{tavern.name}" outcome="tavernDetails.xhtml">
+                <f:param name="id" value="#{tavern.getId()}"/>
+            </h:link></li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:commandButton value="Create new" action="tavernCreation.xhtml"/>
+    </h:form>
+
+    <h1>Weapons</h1>
+    <ol>
+        <ui:repeat value="#{weapons.allWeapons}" var="weapon">
+            <li><h:link value="#{weapon.name}" outcome="weaponDetails.xhtml">
+                <f:param name="id" value="#{weapon.getId()}"/>
+            </h:link></li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:commandButton value="Create new" action="weaponCreation.xhtml"/>
+    </h:form>
+
+    <h:link outcome="myBatis/index" value="MyBatis implementation"/>
+</h:body>
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>#{fighterDetails.fighter.name}</title>
+</h:head>
+
+<h:body>
+    <h1>#{fighterDetails.fighter.name}</h1>
+    <h:button value="Edit" outcome="fighterUpdate.xhtml">
+        <f:param name="id" value="#{fighterDetails.fighter.id}"/>
+    </h:button>
+    <h:form>
+        <h:commandButton value="Delete" action="#{fighterDetails.delete}"/>
+    </h:form>
+
+    <blockquote>#{fighterDetails.fighter.phrase}</blockquote>
+
+    <p>Level: #{fighterDetails.fighter.level}</p>
+    <p>Power: #{fighterDetails.fighter.effectivePower} (#{fighterDetails.fighter.power})</p>
+
+    <p>Taverns:</p>
+    <ui:repeat value="#{fighterDetails.fighter.taverns}" var="tavern">
+        <h:link label="tavern" value="#{tavern.name}" outcome="tavernDetails.xhtml">
+            <f:param name="id" value="#{tavern.id}"/>
+        </h:link>
+        <br/>
+    </ui:repeat>
+    <h:outputText rendered="#{fighterDetails.fighter.taverns.size() eq 0}" value="None"/>
+
+    <p>Weapons:</p>
+    <ui:repeat value="#{fighterDetails.fighter.weapons}" var="weapon">
+        <h:link value="#{weapon.name} (#{weapon.power})"
+                outcome="weaponDetails.xhtml">
+            <f:param name="id" value="#{weapon.id}"/>
+        </h:link>
+        <br/>
+    </ui:repeat>
+    <h:form rendered="#{fighterDetails.otherWeapons.size() gt 0}">
+        <h:selectOneMenu value="#{fighterDetails.chosenWeaponId}">
+            <f:selectItems value="#{fighterDetails.otherWeapons}" var="weapon" itemLabel="#{weapon.name}"
+                           itemValue="#{weapon.id}"/>
+        </h:selectOneMenu>
+        <h:commandButton value="Add weapon" action="#{fighterDetails.addWeapon}"/>
+    </h:form>
+    <h:outputText rendered="#{fighterDetails.fighter.weapons.size() eq 0}" value="None"/>
+</h:body>
+
+</html>

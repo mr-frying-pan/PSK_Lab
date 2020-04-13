@@ -1,0 +1,10 @@
+<datasources>
+    <datasource jndi-name="FightersDataSource" pool-name="FightersDataSource">
+        <driver>postgresql</driver>
+        <connection-url>jdbc:postgresql://localhost:5432/fightdb</connection-url>
+        <security>
+            <user-name>brawl_app</user-name>
+            <password>kick-some-ass</password>
+        </security>
+    </datasource>
+</datasources>

@@ -26,27 +26,32 @@ public class Tavern implements Serializable {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Version
+    @Column(name = "opt_lock_version")
+    private int version;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "TavernFighter",
             joinColumns = @JoinColumn(name = "tavernId", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "fighterId", referencedColumnName = "id"))
     private List<Fighter> fighters = new ArrayList<>();
 
+    public void addFighter(Fighter fighter) {
+        this.fighters.add(fighter);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Tavern)) return false;
         Tavern tavern = (Tavern) o;
-        return Objects.equals(id, tavern.id) &&
-                Objects.equals(name, tavern.name);
+        return getId() == tavern.getId() &&
+                getVersion() == tavern.getVersion() &&
+                getName().equals(tavern.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
-    public void addFighter(Fighter fighter) {
-        this.fighters.add(fighter);
+        return Objects.hash(getId(), getName(), getVersion());
     }
 }

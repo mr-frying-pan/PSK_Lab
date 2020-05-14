@@ -12,7 +12,9 @@ import java.util.Objects;
 @Table(name = "Fighters")
 @NamedQueries({
         @NamedQuery(name = "Fighter.getAll",
-                query = "select f from Fighter as f")
+                query = "select f from Fighter as f"),
+        @NamedQuery(name = "Fighter.getByName",
+                query = "select f from Fighter as f where f.name = :name")
 })
 @Getter
 @Setter
@@ -34,27 +36,15 @@ public class Fighter implements Serializable {
     @Column(name = "phrase", length = 100)
     private String phrase;
 
+    @Version
+    @Column(name = "opt_lock_version")
+    private int version;
+
     @ManyToMany(mappedBy = "fighters", fetch = FetchType.LAZY)
     private List<Tavern> taverns;
 
     @OneToMany(mappedBy = "owner")
     private List<Weapon> weapons;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Fighter fighter = (Fighter) o;
-        return Objects.equals(id, fighter.id) &&
-                Objects.equals(name, fighter.name) &&
-                Objects.equals(power, fighter.power) &&
-                Objects.equals(level, fighter.level);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, power, level);
-    }
 
     public int getEffectivePower() {
         int efPower = this.power + this.level;
@@ -63,5 +53,23 @@ public class Fighter implements Serializable {
             efPower += w.getPower();
         }
         return efPower;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Fighter)) return false;
+        Fighter fighter = (Fighter) o;
+        return getId() == fighter.getId() &&
+                getPower() == fighter.getPower() &&
+                getLevel() == fighter.getLevel() &&
+                getVersion() == fighter.getVersion() &&
+                getName().equals(fighter.getName()) &&
+                Objects.equals(getPhrase(), fighter.getPhrase());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getPower(), getLevel(), getPhrase(), getVersion());
     }
 }

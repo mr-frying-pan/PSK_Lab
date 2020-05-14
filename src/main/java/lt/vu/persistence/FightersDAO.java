@@ -32,6 +32,10 @@ public class FightersDAO {
         return em.find(Fighter.class, id);
     }
 
+    public Fighter get(String name) {
+        return em.createNamedQuery("Fighter.getByName", Fighter.class).setParameter("name", name).getSingleResult();
+    }
+
     public List<Fighter> getUnassociated(Integer tavernId) {
         return this.get().stream()
                 .filter(f ->

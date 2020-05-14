@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TavernDTO {
+    private int id;
     private String name;
 }

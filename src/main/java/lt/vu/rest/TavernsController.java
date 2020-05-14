@@ -1,11 +1,10 @@
 package lt.vu.rest;
 
-import lt.vu.entities.Fighter;
-import lt.vu.persistence.FightersDAO;
-import lt.vu.rest.contracts.FighterDTO;
+import lt.vu.entities.Tavern;
+import lt.vu.persistence.TavernsDAO;
 import lt.vu.rest.contracts.FighterDTOConverter;
+import lt.vu.rest.contracts.TavernDTO;
 import lt.vu.rest.contracts.TavernDTOConverter;
-import lt.vu.rest.contracts.WeaponDTOConverter;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -16,10 +15,10 @@ import javax.ws.rs.core.Response;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
-@Path("fighters")
-public class FightersController implements RESTController<FighterDTO> {
+@Path("taverns")
+public class TavernsController implements RESTController<TavernDTO> {
     @Inject
-    private FightersDAO fightersDAO;
+    private TavernsDAO tavernsDAO;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -27,8 +26,8 @@ public class FightersController implements RESTController<FighterDTO> {
     public Response getAll() {
         try {
             return Response
-                    .ok(fightersDAO.get().stream()
-                            .map(FighterDTOConverter::makeDTO)
+                    .ok(tavernsDAO.get().stream()
+                            .map(TavernDTOConverter::makeDTO)
                             .collect(Collectors.toList()))
                     .build();
         } catch (PersistenceException e) {
@@ -44,11 +43,11 @@ public class FightersController implements RESTController<FighterDTO> {
     @Override
     public Response getOne(@PathParam("id") int id) {
         try {
-            Fighter fighter = fightersDAO.get(id);
-            if (fighter == null)
-                return Response.status(404, "Fighter id " + id + " not found").build();
+            Tavern t = tavernsDAO.get(id);
+            if (t == null)
+                return Response.status(404, "Tavern id " + id + " not found").build();
             return Response
-                    .ok(FighterDTOConverter.makeDTO(fighter))
+                    .ok(TavernDTOConverter.makeDTO(t))
                     .build();
         } catch (PersistenceException e) {
             return Response
@@ -58,36 +57,16 @@ public class FightersController implements RESTController<FighterDTO> {
     }
 
     @GET
-    @Path("{id}/taverns")
+    @Path("{id}/fighters")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTaverns(@PathParam("id") int id) {
+    public Response getFighters(@PathParam("id") int id) {
         try {
-            Fighter f = fightersDAO.get(id);
-            if (f == null)
-                return Response.status(404, "Fighter id " + id + " not found").build();
+            Tavern t = tavernsDAO.get(id);
+            if (t == null)
+                return Response.status(404, "Tavern id " + id + " not found").build();
             return Response
-                    .ok(f.getTaverns().stream()
-                            .map(TavernDTOConverter::makeDTO)
-                            .collect(Collectors.toList()))
-                    .build();
-        } catch (PersistenceException e) {
-            return Response
-                    .status(400, e.getClass().getName() + ": " + e.getMessage())
-                    .build();
-        }
-    }
-
-    @GET
-    @Path("{id}/weapons")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getWeapons(@PathParam("id") int id) {
-        try {
-            Fighter f = fightersDAO.get(id);
-            if (f == null)
-                return Response.status(404, "Fighter id " + id + " not found").build();
-            return Response
-                    .ok(f.getWeapons().stream()
-                            .map(WeaponDTOConverter::makeDTO)
+                    .ok(t.getFighters().stream()
+                            .map(FighterDTOConverter::makeDTO)
                             .collect(Collectors.toList()))
                     .build();
         } catch (PersistenceException e) {
@@ -101,11 +80,11 @@ public class FightersController implements RESTController<FighterDTO> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response create(FighterDTO dto) {
+    public Response create(TavernDTO dto) {
         try {
-            Fighter f = FighterDTOConverter.makeEntity(dto);
-            fightersDAO.persist(f);
-            dto.setId(f.getId());
+            Tavern tavern = TavernDTOConverter.makeEntity(dto);
+            tavernsDAO.persist(tavern);
+            dto.setId(tavern.getId());
             return Response.ok(dto).build();
         } catch (PersistenceException e) {
             return Response
@@ -119,14 +98,14 @@ public class FightersController implements RESTController<FighterDTO> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Response update(@PathParam("id") int id, FighterDTO dto) {
+    public Response update(@PathParam("id") int id, TavernDTO dto) {
         try {
-            Fighter fighter = fightersDAO.get(id);
-            if (fighter == null)
-                return Response.status(404, "Fighter id " + id + " not found").build();
-            FighterDTOConverter.updateEntity(fighter, dto);
-            fightersDAO.update(fighter);
+            Tavern tavern = tavernsDAO.get(id);
+            if (tavern == null)
+                return Response.status(404, "Tavern id " + id + " not found").build();
+            TavernDTOConverter.updateEntity(tavern, dto);
             dto.setId(id);
+            tavernsDAO.update(tavern);
             return Response.ok(dto).build();
         } catch (PersistenceException e) {
             return Response
@@ -140,13 +119,13 @@ public class FightersController implements RESTController<FighterDTO> {
     @Override
     public Response delete(@PathParam("id") int id) {
         try {
-            Fighter f = fightersDAO.get(id);
-            if (f != null)
-                fightersDAO.delete(f);
+            Tavern t = tavernsDAO.get(id);
+            if (t != null)
+                tavernsDAO.delete(t);
             return Response.noContent().build();
         } catch (PersistenceException e) {
             return Response
-                    .status(400, "Invalid id")
+                    .status(400, e.getClass().getName() + ": " + e.getMessage())
                     .build();
         }
     }

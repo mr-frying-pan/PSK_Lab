@@ -19,13 +19,15 @@
 
         <table schema="public" tableName="Taverns">
             <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+            <ignoreColumn column="opt_lock_version"/>
         </table>
         <table schema="public" tableName="Fighters">
             <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
-            <!--            <ignoreColumn column="opt_lock_version" />-->
+            <ignoreColumn column="opt_lock_version"/>
         </table>
         <table schema="public" tableName="Weapons">
             <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+            <ignoreColumn column="opt_lock_version"/>
         </table>
         <table schema="public" tableName="TavernFighter"/>
     </context>

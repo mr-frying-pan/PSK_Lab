@@ -28,6 +28,10 @@ public class Weapon {
     @Column(name = "power")
     private int power;
 
+    @Version
+    @Column(name = "opt_lock_version")
+    private int version;
+
     @ManyToOne
     @JoinColumn(name = "fighterId")
     private Fighter owner;

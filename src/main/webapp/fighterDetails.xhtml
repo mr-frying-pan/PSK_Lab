@@ -17,6 +17,7 @@
     <h:button value="Edit" outcome="fighterUpdate.xhtml">
         <f:param name="id" value="#{fighterDetails.fighter.id}"/>
     </h:button>
+    <h:outputLabel rendered="#{fighterDetails.reload}" value="Fighter has been updated elsewhere. Please try again"/>
     <h:form>
         <h:commandButton value="Delete" action="#{fighterDetails.delete}"/>
     </h:form>

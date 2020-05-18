@@ -7,6 +7,7 @@ import lt.vu.persistence.WeaponsDAO;
 import lt.vu.rest.contracts.WeaponDTO;
 import lt.vu.rest.contracts.WeaponDTOConverter;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
@@ -14,6 +15,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.stream.Collectors;
 
+@ApplicationScoped
+@Path("weapons")
 public class WeaponsController implements RESTController<WeaponDTO> {
     @Inject
     private WeaponsDAO weaponsDAO;

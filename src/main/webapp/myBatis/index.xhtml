@@ -20,7 +20,7 @@
 <h:body>
     <h1>CHOOSE TAVERN</h1>
     <ui:repeat value="#{tavernSelect.allTaverns}" var="tavern">
-        <h:link value="#{tavern.name}" outcome="tavernBrawl.xhtml">
+        <h:link value="#{tavern.name}" outcome="brawlDetails.xhtml">
             <f:param name="id" value="#{tavern.id}"/>
         </h:link>
         <br/>

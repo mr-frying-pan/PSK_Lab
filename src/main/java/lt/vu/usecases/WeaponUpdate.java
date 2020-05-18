@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.OptimisticLockException;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -30,7 +31,11 @@ public class WeaponUpdate implements Serializable {
     }
 
     public String update() {
-        this.weaponsDAO.update(this.weapon);
-        return "weaponDetails.xhtml?faces-redirect=true&id=" + this.weapon.getId();
+        try {
+            this.weaponsDAO.update(this.weapon);
+            return "weaponDetails.xhtml?faces-redirect=true&id=" + this.weapon.getId();
+        } catch (OptimisticLockException e) {
+            return "weaponDetails.xhtml?faces-redirect=true&id=" + this.weapon.getId() + "&reload=true";
+        }
     }
 }

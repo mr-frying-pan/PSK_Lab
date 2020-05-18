@@ -48,10 +48,14 @@ public class FighterDetails implements Serializable {
     @Setter
     private Integer chosenWeaponId = -1;
 
+    @Getter
+    private boolean reload;
+
     @PostConstruct
     private void init() {
         Map<String, String> requestParameters =
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.reload = requestParameters.getOrDefault("reload", "false").equals("true");
         Integer fighterId = Integer.parseInt(requestParameters.get("id"));
         this.fighter = this.fightersDAO.get(fighterId);
 

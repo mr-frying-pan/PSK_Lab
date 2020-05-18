@@ -21,10 +21,14 @@ public class WeaponDetails implements Serializable {
     @Getter
     private Weapon weapon;
 
+    @Getter
+    private boolean reload;
+
     @PostConstruct
     public void init() {
         Map<String, String> requestParameters =
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.reload = requestParameters.getOrDefault("reload", "false").equals("true");
         int weaponId = Integer.parseInt(requestParameters.get("id"));
         this.weapon = this.weaponsDAO.get(weaponId);
     }

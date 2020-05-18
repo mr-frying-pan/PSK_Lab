@@ -19,6 +19,7 @@
 
 <h:body>
     <h1>#{tavernDetails.tavern.name}</h1>
+    <h:outputLabel rendered="#{tavernDetails.reload}" value="Tavern has been updated elsewhere. Please try again."/>
     <h:button value="Edit" outcome="tavernUpdate.xhtml">
         <f:param name="id" value="#{tavernDetails.tavern.id}"/>
     </h:button>

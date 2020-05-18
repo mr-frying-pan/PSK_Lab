@@ -36,10 +36,14 @@ public class TavernDetails implements Serializable {
     @Getter
     private List<Fighter> otherFighters;
 
+    @Getter
+    private boolean reload;
+
     @PostConstruct
     public void init() {
         Map<String, String> requestParameters =
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        this.reload = requestParameters.getOrDefault("reload", "false").equals("true");
         int tavernId = Integer.parseInt(requestParameters.get("id"));
         this.tavern = this.tavernsDAO.get(tavernId);
 

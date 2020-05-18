@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Named
 @ViewScoped
-public class TavernBrawl implements Serializable {
+public class BrawlDetails implements Serializable {
     @Inject
     private TavernsMapper tavernMapper;
 
@@ -36,15 +36,10 @@ public class TavernBrawl implements Serializable {
     @Getter
     private List<Fighter> fighters;
 
-    @Getter
-    private boolean brawlOver = false;
-
     @PostConstruct
     public void init() {
         Map<String, String> requestParameters =
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        String maybeOver = requestParameters.get("over");
-        this.brawlOver = maybeOver != null && maybeOver.equals("true");
         int tavernId = Integer.parseInt(requestParameters.get("id"));
         this.tavern = this.tavernMapper.selectByPrimaryKey(tavernId);
         List<TavernFighter> tfs = this.tavernFighterMapper.selectByTavernId(tavernId);
@@ -53,9 +48,5 @@ public class TavernBrawl implements Serializable {
             Fighter fighter = fightersMapper.selectByPrimaryKey(tf.getFighterid());
             this.fighters.add(fighter);
         }
-    }
-
-    public String brawl() {
-        return "tavernBrawl.xhtml?faces-redirect=true&over=true&id=" + this.tavern.getId();
     }
 }

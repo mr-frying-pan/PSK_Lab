@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: me
+  Date: 4/13/20
+  Time: 10:01 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>#{brawlDetails.tavern.name}</title>
+</h:head>
+
+<h:body>
+    <h:form rendered="#{not brawling.running}">
+        <p>Fighters:</p>
+        <ui:repeat value="#{brawlDetails.fighters}" var="fighter">
+            <p>#{fighter.name} &ndash; <q>#{fighter.phrase}</q></p>
+        </ui:repeat>
+        <h:commandButton value="Start" action="#{brawling.brawl}">
+            <f:param name="id" value="#{brawlDetails.tavern.id}"/>
+        </h:commandButton>
+    </h:form>
+    <h:panelGroup layout="block">
+        <h:outputText value="#{brawling.brawlStatus}"/>
+    </h:panelGroup>
+    <h:button style="display: block" value="Back" outcome="index.xhtml"/>
+</h:body>
+
+</html>

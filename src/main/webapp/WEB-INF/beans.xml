@@ -9,7 +9,10 @@
     <interceptors>
         <class>lt.vu.interceptors.MethodLogger</class>
     </interceptors>
+    <decorators>
+        <class>lt.vu.decorators.BrawlParamDecorator</class>
+    </decorators>
     <alternatives>
-        <class>lt.vu.services.FastMyBatisBrawl</class>
+        <class>lt.vu.services.RandomMyBatisBrawl</class>
     </alternatives>
 </beans>

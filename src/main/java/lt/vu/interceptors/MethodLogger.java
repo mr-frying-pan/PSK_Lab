@@ -6,11 +6,11 @@ import javax.interceptor.InvocationContext;
 import java.io.Serializable;
 
 @Interceptor
-@LoggedInvocation
+@Log
 public class MethodLogger implements Serializable {
     @AroundInvoke
     public Object logMethodInvocation(InvocationContext context) throws Exception {
-        System.out.println("Called method: " + context.getMethod().getName());
+        System.out.println("METHOD CALLED: " + context.getClass().getName() + "." + context.getMethod().getName());
         return context.proceed();
     }
 }

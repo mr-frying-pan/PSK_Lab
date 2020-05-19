@@ -1,5 +1,6 @@
 package lt.vu.services;
 
+import lt.vu.interceptors.Log;
 import lt.vu.mybatis.model.Fighter;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -10,6 +11,7 @@ import java.util.Random;
 @ApplicationScoped
 @Alternative
 public class RandomMyBatisBrawl implements TavernBrawl {
+    @Log
     @Override
     public List<Fighter> brawl(List<Fighter> fighters) {
         System.out.println("RANDOM BRAWL");

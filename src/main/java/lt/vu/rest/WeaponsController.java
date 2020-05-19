@@ -10,6 +10,7 @@ import lt.vu.rest.contracts.WeaponDTOConverter;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -87,6 +88,7 @@ public class WeaponsController implements RESTController<WeaponDTO> {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Override
+    @Transactional
     public Response update(@PathParam("id") int id, WeaponDTO dto) {
         try {
             Weapon weapon = weaponsDAO.get(id);
